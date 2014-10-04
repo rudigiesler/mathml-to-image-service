@@ -44,8 +44,9 @@ def to_image(svg_string, image_format, max_size):
         os.remove(tmp_file_name)
         return png_filename
 
-    # TODO: implement pngcrush -bit_depth 1 foo4.png foo5.png
-
+    #TODO: Implement optional file size optimisation.
+    #convert foo1.png -colors 2 foo2.png; (reduce color depth)
+    #pngcrush -bit_depth 1 foo2.png final.png (implement optimal png)
 
 def main():
     svg_string = open('example.svg', 'r', encoding='utf-8').read()
