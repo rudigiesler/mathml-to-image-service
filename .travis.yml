@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.4"
+before_install:
+  - git clone https://github.com/agrbin/svgtex.git
+  - pushd svgtex
+  - "phantomjs main.js &"
+  - popd
+install:
+  - "pip install -r requirements.txt"
+script:
+  - python -m unittest discover mathml_to_image_service
