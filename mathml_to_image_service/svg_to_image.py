@@ -14,14 +14,14 @@ def to_image(svg_string, image_format, max_size):
     svg_file.close()
 
     if image_format.upper() == 'PNG':
-        extention = '.png'
+        extension = '.png'
     elif image_format.upper() == 'GIF':
-        extention = '.gif'
+        extension = '.gif'
     else:
         raise NameError(
             'Unsupported output file format - "GIF" and "PNG" only.')
 
-    filename = "%s%s" % (uuid.uuid4().hex, extention)
+    filename = "%s%s" % (uuid.uuid4().hex, extension)
     subprocess.check_call(
         ['convert', tmp_file_name, '-resize',
          '%sx%s' % (max_size, max_size), filename], stderr=subprocess.DEVNULL)
