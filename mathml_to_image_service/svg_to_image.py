@@ -21,18 +21,30 @@ def to_image(svg_string, image_format, max_size):
         raise NameError(
             'Unsupported output file format - "GIF" and "PNG" only.')
 
+    png_filename = "%s.png" % (uuid.uuid4().hex)
     filename = "%s%s" % (uuid.uuid4().hex, extention)
+   
     subprocess.check_call(
-        ['convert', tmp_file_name, '-resize',
-         '%sx%s' % (max_size, max_size), filename], stderr=subprocess.DEVNULL)
-    os.remove(tmp_file_name)
+        ['rsvg-convert', tmp_file_name, '-w',
+         '%s' % (max_size,),'--background-color','white','-o', png_filename], stderr=subprocess.DEVNULL)
 
-    return filename
+    if image_format.upper() == 'GIF':
+        subprocess.check_call(
+            ['convert', png_filename, filename], stderr=subprocess.DEVNULL)
 
+        os.remove(tmp_file_name)
+        os.remove(png_filename)
+        return filename
+    
+    else:
+        os.remove(tmp_file_name)
+        return png_filename
+        
+    #TODO: implement pngcrush -bit_depth 1 foo4.png foo5.png
 
 def main():
     svg_string = open('example.svg', 'r', encoding='utf-8').read()
-    print (to_image(svg_string, 'GIF', 300))
+    print (to_image(svg_string, 'PNG', 300))
 
 
 if __name__ == '__main__':
