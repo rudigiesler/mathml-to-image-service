@@ -3,5 +3,5 @@
 ## Usage:
 ```python
 pip install -r requirements.txt
-python service.py
+python mathml-to-image-service/service.py
 ```
