@@ -3,11 +3,11 @@ import requests
 
 
 class SVGEncodeError(Exception):
-    def __init__(self, errors):
-        self.errors = errors
+    def __init__(self, error):
+        self.error = error
 
     def __str__(self):
-        return "SVGEncodeError: " + '\n'.join(self.errors)
+        return "SVGEncodeError: %s" % self.error
 
 
 def get_svg(mathml):
@@ -16,8 +16,7 @@ def get_svg(mathml):
 
     :param str mathml: The MathML to be converted.
     """
-    r = requests.post(mathoid_url, data={'q': mathml})
-    data = r.json()
-    if data.get('success') is False:
-        raise SVGEncodeError(data.get('errors'))
-    return data.get('svg')
+    r = requests.post(mathoid_url, data={'q': mathml, 'type': 'mml'})
+    if r.text is None:
+        raise SVGEncodeError("Conversion error")
+    return r.text

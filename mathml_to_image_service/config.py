@@ -1,1 +1,1 @@
-mathoid_url = 'http://localhost:10042/'
+mathoid_url = 'http://localhost:16000/'

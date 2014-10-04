@@ -1,5 +1,12 @@
 # mathml-to-image-service
 
+## Installing and running svgtex (requires phantomjs)
+```nodejs
+git clone https://github.com/agrbin/svgtex.git
+cd svgtex
+phantomjs main.js
+```
+
 ## Usage:
 ```python
 pip install -r requirements.txt
