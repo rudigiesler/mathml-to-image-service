@@ -15,5 +15,5 @@ python mathml_to_image_service/service.py
 
 ## Running tests:
 ```python
-python mathml_to_image_service/test_service.py
+python -m unittest discover mathml_to_image_service
 ```
