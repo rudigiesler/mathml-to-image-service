@@ -15,9 +15,9 @@ def to_image(svg_string, image_format, max_size):
     svg_file.write(svg_string)
     svg_file.close()
 
-    if image_format == 'PNG':
+    if image_format.upper() == 'PNG':
         extention = '.png'
-    elif image_format == 'GIF':
+    elif image_format.upper() == 'GIF':
         extention = '.gif'
     else:
         raise NameError(
