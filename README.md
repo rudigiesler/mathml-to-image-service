@@ -1,5 +1,7 @@
-mathml-to-image-service
+# mathml-to-image-service
 
-Usage:
+## Usage:
+```python
 pip install -r requirements.txt
 python service.py
+```
