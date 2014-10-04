@@ -54,3 +54,6 @@ docs/_build/
 target/
 
 ve/
+
+# Static files
+mathml_to_image_service/static/*
