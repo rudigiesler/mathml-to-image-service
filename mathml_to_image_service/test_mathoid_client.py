@@ -4,7 +4,7 @@ from mathoid_client import get_svg
 
 class MathoidTestCase(unittest.TestCase):
     def setUp(self):
-        with open('mathoid_test_data.svg') as f:
+        with open('mathml_to_image_service/mathoid_test_data.svg') as f:
             lines = f.readlines()
             self.data = ''.join(lines)
 
