@@ -23,8 +23,9 @@ def to_image(svg_string, image_format, max_size):
 
     filename = "%s%s" % (uuid.uuid4().hex, extension)
     subprocess.check_call(
-        ['convert', tmp_file_name, '-resize',
-         '%sx%s' % (max_size, max_size), filename], stderr=subprocess.DEVNULL)
+        ['convert', tmp_file_name, '-resize', '%sx%s' % (max_size, max_size),
+         'mathml_to_image_service/static/%s' % filename],
+        stderr=subprocess.DEVNULL)
     os.remove(tmp_file_name)
 
     return filename
