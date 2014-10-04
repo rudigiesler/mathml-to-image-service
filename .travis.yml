@@ -4,7 +4,7 @@ python:
 before_install:
   - git clone https://github.com/agrbin/svgtex.git
   - cd svgtex
-  - phantomjs main.js
+  - "phantomjs main.js &"
 install:
   - "pip install -r requirements.txt"
 script:
