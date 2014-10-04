@@ -1,5 +1,5 @@
 import unittest
-from mathoid_client import get_svg
+from mathoid_client import get_svg, SVGEncodeError
 
 
 class MathoidTestCase(unittest.TestCase):
@@ -13,6 +13,11 @@ class MathoidTestCase(unittest.TestCase):
 
     def test_basic_encode(self):
         self.assertEqual(get_svg(self.mml), self.svg)
+
+    def test_broken_encode(self):
+        with self.assertRaises(SVGEncodeError):
+            get_svg('<math>')
+            get_svg('<foo></foo>')
 
 if __name__ == '__main__':
     unittest.main()
