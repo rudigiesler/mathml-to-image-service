@@ -1,5 +1,0 @@
-mathml-to-image-service
-
-Usage:
-npm install
-node server.js
