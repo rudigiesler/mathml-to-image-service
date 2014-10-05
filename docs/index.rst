@@ -9,40 +9,15 @@ Converting MathML::
 
 Into images:
 
-.. math::
-    :nowrap:
+.. image:: _static/Example.gif
 
-    \begin{equation}
-        e^{ix} = \cos x + i\sin x
-    \end{equation}
+Contents
+--------
 
-Requirements
-------------
+.. toctree::
+   :maxdepth: 2
 
-Installing prerequisites::
-
-    sudo apt-get install librsvg2-bin phantomjs
-
-Installing and running svgtex::
-
-    git clone https://github.com/agrbin/svgtex.git
-    cd svgtex
-    phantomjs main.js
-
-Python requirments::
-
-    pip install -r requirements.txt
-
-Usage
------
-
-Running server::
-
-    python mathml_to_image_service/service.py
-
-Running tests::
-
-    python -m unittest discover mathml_to_image_service
+   getting_started
 
 Contribute
 ----------
