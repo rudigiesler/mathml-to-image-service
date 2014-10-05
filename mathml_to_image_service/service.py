@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, make_response, request, url_for
 
-from mathoid_client import get_svg
+from mathoid_client import get_svg, SVGEncodeError
 from svg_to_image import to_image
 
 
@@ -18,7 +18,10 @@ def convert():
     except KeyError as error:
         return jsonify(error='Missing field: %s' % error.args[0]), 400
 
-    svg_string = get_svg(mathml)
+    try:
+        svg_string = get_svg(mathml)
+    except SVGEncodeError as e:
+        return jsonify(error=e.args[0]), 400
 
     file_name = to_image(svg_string, format, int(max_size))
 
