@@ -9,7 +9,7 @@ class SVGEncodeError(Exception):
         self.error = error
 
     def __str__(self):
-        return "SVGEncodeError: %s" % self.error
+        return 'SVGEncodeError: %s' % self.error
 
 
 def get_svg(mathml):
@@ -21,8 +21,8 @@ def get_svg(mathml):
     try:
         ET.fromstring(mathml)
     except ParseError as e:
-        raise SVGEncodeError("Invalid MathML %s" % e)
+        raise SVGEncodeError('Invalid MathML %s' % e)
     r = requests.post(mathoid_url, data={'q': mathml, 'type': 'mml'})
     if r.text is None or 'Error parsing MathML: ' in r.text:
-        raise SVGEncodeError("Conversion error")
+        raise SVGEncodeError('Conversion error')
     return r.text
