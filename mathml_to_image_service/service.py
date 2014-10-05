@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, url_for
+from flask import Flask, jsonify, request, url_for, make_response
 
 from mathoid_client import get_svg
 from svg_to_image import to_image
@@ -22,7 +22,10 @@ def convert():
 
     file_name = to_image(svg_string, format, int(max_size))
 
-    return jsonify(url=url_for('static', filename=file_name))
+    url = url_for('static', filename=file_name)
+    data = jsonify(url=url)
+
+    return make_response((data, 302, {'Location': url}))
 
 
 if __name__ == '__main__':
