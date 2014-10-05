@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, url_for
 
 from mathoid_client import get_svg
-import svg_to_image
+from svg_to_image import to_image
 
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def convert():
 
     svg_string = get_svg(mathml)
 
-    file_name = svg_to_image.to_image(svg_string, format, int(max_size))
+    file_name = to_image(svg_string, format, int(max_size))
 
     return jsonify(url=url_for('static', filename=file_name))
 
