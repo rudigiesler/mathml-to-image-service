@@ -16,7 +16,7 @@ def convert():
         format = request.form['image_format']
         max_size = request.form['max_size']
     except KeyError as error:
-        return jsonify(error='Missing field: %s' % error.args[0], status=400)
+        return jsonify(error='Missing field: %s' % error.args[0]), 400
 
     svg_string = get_svg(mathml)
 
