@@ -19,8 +19,11 @@ class SVGToImageTestCase(unittest.TestCase):
         with open('mathml_to_image_service/tests/broken.svg') as f:
             lines = f.readlines()
             svg = ''.join(lines)
-        with self.assertRaises(ImageConvertError):
+        with self.assertRaises(ImageConvertError) as e:
             filename = to_image(svg, 'png', 200)
+        self.assertEqual(
+            e.exception.args[0],
+            'Invalid SVG')
 
     def test_create_bad_format_parameter(self):
         with open('mathml_to_image_service/tests/mathoid_test_data.svg') as f:
