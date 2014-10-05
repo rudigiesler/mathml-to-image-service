@@ -47,6 +47,7 @@ def to_image(svg_string, image_format, max_size):
     # TODO: implement pngcrush -bit_depth 1 foo4.png foo5.png
 
 
+
 def main():
     svg_string = open('example.svg', 'r', encoding='utf-8').read()
     print (to_image(svg_string, 'PNG', 300))

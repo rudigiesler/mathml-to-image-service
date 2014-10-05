@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, url_for, make_response
+from flask import Flask, jsonify, make_response, request, url_for
 
 from mathoid_client import get_svg
 from svg_to_image import to_image
