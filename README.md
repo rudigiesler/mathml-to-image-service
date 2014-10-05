@@ -1,16 +1,15 @@
 # mathml-to-image-service
 
-## Installing and running svgtex (requires phantomjs)
+## Installing prerequisites
 ```shell
-sudo apt-get install phantomjs
+sudo apt-get install librsvg2-bin phantomjs
+```
+
+## Installing and running svgtex
+```shell
 git clone https://github.com/agrbin/svgtex.git
 cd svgtex
 phantomjs main.js
-```
-
-## Installing prerequisites
-```shell
-sudo apt-get install librsvg2-bin
 ```
 
 ## Usage:
