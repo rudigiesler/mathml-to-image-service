@@ -5,7 +5,23 @@ import uuid
 from config import STATIC_DIR
 
 
-def to_image(svg_string, image_format, max_size):
+def to_image(svg_string, image_format, max_size, quality=3):
+    """
+    Takes an svg string and converts it to GIF or PNG with various parameters.
+    Stores the image on disk and returns the filename.
+
+    :param string svg_string:
+        The string that represents the SVG to convert
+    :param string image_format:
+        The format of the resulting image. One of ``GIF`` or ``PNG``.
+    :param int max_size:
+        The maximum size of the image in pixels. Must be between [1, 1000].
+    :param int quality:
+        The amount of effort put towards reducing the size of the resulting
+        image. 3 is the maximum and 1 is the minimum. Note that 1 and 2 might
+        break compatibility on some devices.
+    """
+
     if max_size > 1000:
         raise NameError("max_size is too big. Max of 1000px.")
 
