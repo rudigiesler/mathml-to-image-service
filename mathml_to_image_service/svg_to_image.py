@@ -34,12 +34,11 @@ def reduce_quality(filename, quality):
         """
         try:
             subprocess.check_call(
-                ['pngcrush -bit_depth 1', source, destination],
+                ['pngcrush', '-bit_depth', '1', source, destination],
                 stderr=subprocess.DEVNULL)
             os.remove(source)
             return destination
         except subprocess.CalledProcessError as e:
-            os.remove(destination)
             os.rename(source, destination)
             raise ImageConvertError('Cannot pngcrush the image')
 
@@ -51,12 +50,11 @@ def reduce_quality(filename, quality):
         """
         try:
             subprocess.check_call(
-                ['convert', source, '-colors 2', destination],
+                ['convert', source, '-colors', '2', destination],
                 stderr=subprocess.DEVNULL)
             os.remove(source)
             return destination
         except subprocess.CalledProcessError as e:
-            os.remove(destination)
             os.rename(source, destination)
             raise ImageConvertError('Cannot reduce colour depth with convert')
 
@@ -69,11 +67,14 @@ def reduce_quality(filename, quality):
     _, extension = os.path.splitext(filename)
     os.rename(filename, tmp_filename)
     if quality == 2:
-        pngcrush(tmp_filename, filename)
+        if extension.upper() == '.PNG':
+            pngcrush(tmp_filename, filename)
+        else:
+            os.rename(tmp_filename, filename)
         return filename
-    if quality == 3:
+    if quality == 1:
         reduce_colour_depth(tmp_filename, filename)
-        if extension.upper() == 'PNG':
+        if extension.upper() == '.PNG':
             os.rename(filename, tmp_filename)
             pngcrush(tmp_filename, filename)
             return filename
@@ -142,11 +143,11 @@ def to_image(svg_string, image_format, max_size, quality=3):
 
         os.remove(tmp_file_name)
         os.remove(STATIC_DIR % png_filename)
-        reduce_quality(filename, quality)
+        reduce_quality(STATIC_DIR % filename, quality)
         return filename
     else:
         os.remove(tmp_file_name)
-        reduce_quality(png_filename, quality)
+        reduce_quality(STATIC_DIR % png_filename, quality)
         return png_filename
 
 
