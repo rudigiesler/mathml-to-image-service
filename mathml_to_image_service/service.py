@@ -10,7 +10,9 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def convert():
     if request.method == 'GET':
-        return jsonify(error='Try sending MathML in a POST request. :)')
+        return jsonify(
+            error="Try a post with fields: 'mathml', 'max_size', and "
+                  "'image_format'")
     try:
         mathml = request.form['mathml']
         format = request.form['image_format']

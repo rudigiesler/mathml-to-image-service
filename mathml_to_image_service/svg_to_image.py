@@ -152,7 +152,7 @@ def to_image(svg_string, image_format, max_size, quality=3):
 
 def main():
     svg_string = open('example.svg', 'r', encoding='utf-8').read()
-    print (to_image(svg_string, 'PNG', 300))
+    print(to_image(svg_string, 'PNG', 300))
 
 
 if __name__ == '__main__':
