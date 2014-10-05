@@ -13,14 +13,14 @@ class ImageConvertError(Exception):
         return "Image processing error: %s" % self.error
 
 
-def reduce_quality(path, quality):
+def reduce_quality(filename, quality):
     """
     Takes in a PNG or GIF and reduces the file size at the cost of image
     quality. If quality is 3, the image is not touched. If the quality is 2,
     the image quality is slightly reduced, if the quality is 1, the image
     quality is greatly reduces.
 
-    :param string path:
+    :param string filename:
         The path of the image file.
     :param int quality:
         The desired quality setting.
