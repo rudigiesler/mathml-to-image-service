@@ -11,12 +11,13 @@ app = Flask(__name__)
 def convert():
     if request.method == 'GET':
         return jsonify(
-            error="Try a post with fields: 'mathml', 'max_size', and "
-                  "'image_format'")
+            error="Try a post with fields: 'mathml', 'max_size', "
+                  "'image_format', and 'quality'")
     try:
         mathml = request.form['mathml']
         format = request.form['image_format']
         max_size = request.form['max_size']
+        quality = request.form['quality']
     except KeyError as error:
         return jsonify(error='Missing field: %s' % error.args[0]), 400
 
@@ -25,7 +26,7 @@ def convert():
     except SVGEncodeError as e:
         return jsonify(error=e.args[0]), 400
 
-    file_name = to_image(svg_string, format, int(max_size))
+    file_name = to_image(svg_string, format, int(max_size), int(quality))
 
     url = url_for('static', filename=file_name)
     data = jsonify(url=url)
