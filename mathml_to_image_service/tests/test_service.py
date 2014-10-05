@@ -14,7 +14,8 @@ class FlaskrTestCase(unittest.TestCase):
     def test_root_path_get(self):
         self.assertEqual(
             json.loads(self.app.get('/').data.decode('utf-8')),
-            {'error': 'Try sending MathML in a POST request. :)'})
+            {'error': "Try a post with fields: 'mathml', 'max_size', and "
+                      "'image_format'"})
 
     def test_root_path_post_400_with_missing_field(self):
         response = self.app.post('/')
