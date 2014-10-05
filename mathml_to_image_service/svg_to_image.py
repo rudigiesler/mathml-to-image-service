@@ -53,6 +53,7 @@ def to_image(svg_string, image_format, max_size):
         except subprocess.CalledProcessError as e:
             os.remove(tmp_file_name)
             os.remove(STATIC_DIR % png_filename)
+            os.remove(STATIC_DIR % filename)
             raise ImageConvertError('Invalid PNG')
 
         os.remove(tmp_file_name)
