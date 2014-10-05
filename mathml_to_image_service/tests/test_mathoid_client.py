@@ -1,13 +1,14 @@
 import unittest
-from mathoid_client import get_svg, SVGEncodeError
+
+from mathml_to_image_service.mathoid_client import get_svg, SVGEncodeError
 
 
 class MathoidTestCase(unittest.TestCase):
     def setUp(self):
-        with open('mathml_to_image_service/mathoid_test_data.svg') as f:
+        with open('mathml_to_image_service/tests/mathoid_test_data.svg') as f:
             lines = f.readlines()
             self.svg = ''.join(lines)
-        with open('mathml_to_image_service/mathoid_test_data.mml') as f:
+        with open('mathml_to_image_service/tests/mathoid_test_data.mml') as f:
             lines = f.readlines()
             self.mml = ''.join(lines)
 
