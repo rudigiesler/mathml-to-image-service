@@ -2,8 +2,7 @@ import os
 import subprocess
 import uuid
 
-
-STATIC_DIR = 'mathml_to_image_service/static/%s'
+from mathml_to_image_service.config import STATIC_DIR
 
 
 def to_image(svg_string, image_format, max_size):
