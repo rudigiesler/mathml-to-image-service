@@ -40,17 +40,17 @@ def to_image(svg_string, image_format, max_size):
             ['rsvg-convert', tmp_file_name, '-w', '%s' % (max_size,),
              '--background-color', 'white', '-o', STATIC_DIR % png_filename],
             stderr=subprocess.DEVNULL)
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         os.remove(tmp_file_name)
         os.remove(STATIC_DIR % png_filename)
         raise ImageConvertError('Invalid SVG')
 
-    if image_format.upper() == 'GIF':
+    if extension == '.gif':
         try:
             subprocess.check_call(
                 ['convert', STATIC_DIR % png_filename, STATIC_DIR % filename],
                 stderr=subprocess.DEVNULL)
-        except subprocess.CalledProcessError as e:
+        except subprocess.CalledProcessError:
             os.remove(tmp_file_name)
             os.remove(STATIC_DIR % png_filename)
             os.remove(STATIC_DIR % filename)
