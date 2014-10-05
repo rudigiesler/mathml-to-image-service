@@ -3,9 +3,8 @@ import os
 import re
 import unittest
 
-from config import STATIC_DIR
-
 from mathml_to_image_service import service
+from mathml_to_image_service.config import STATIC_DIR
 
 
 class FlaskrTestCase(unittest.TestCase):
