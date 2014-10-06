@@ -1,6 +1,11 @@
 language: python
 python:
   - "3.4"
+cache:
+    - apt
+    directories:
+        - $HOME/.pip-cache/
+        - /home/travis/virtualenv/python3.4
 before_install:
   - git clone https://github.com/agrbin/svgtex.git
   - pushd svgtex
@@ -8,7 +13,7 @@ before_install:
   - popd
   - sudo apt-get install pngcrush
 install:
-  - "pip install -r requirements.txt"
+    - pip install -r requirements.txt --download-cache $HOME/.pip-cache
 script:
   - python -m unittest discover mathml_to_image_service
 notifications:
