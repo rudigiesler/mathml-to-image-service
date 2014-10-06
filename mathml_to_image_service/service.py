@@ -25,7 +25,10 @@ def convert():
     except SVGEncodeError as e:
         return jsonify(error=e.args[0]), 400
 
-    file_name = to_image(svg_string, format, int(max_size))
+    try:
+        file_name = to_image(svg_string, format, int(max_size))
+    except NameError as error:
+        return jsonify(error=error.args[0]), 400
 
     url = url_for('static', filename=file_name)
     data = jsonify(url=url)
