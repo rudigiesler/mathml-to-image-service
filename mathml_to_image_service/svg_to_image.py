@@ -13,7 +13,92 @@ class ImageConvertError(Exception):
         return "Image processing error: %s" % self.error
 
 
-def to_image(svg_string, image_format, max_size):
+def reduce_quality(filename, quality):
+    """
+    Takes in a PNG or GIF and reduces the file size at the cost of image
+    quality. If quality is 3, the image is not touched. If the quality is 2,
+    the image quality is slightly reduced, if the quality is 1, the image
+    quality is greatly reduces.
+
+    :param string filename:
+        The path of the image file.
+    :param int quality:
+        The desired quality setting.
+    """
+
+    def pngcrush(source, destination):
+        """
+        Runs pngcrush on source, and stores in destination. Removes source.
+        If the conversion fails, raises exception, and moves source to
+        destination.
+        """
+        try:
+            subprocess.check_call(
+                ['pngcrush', '-bit_depth', '1', source, destination],
+                stderr=subprocess.DEVNULL)
+            os.remove(source)
+            return destination
+        except subprocess.CalledProcessError as e:
+            os.rename(source, destination)
+            raise ImageConvertError('Cannot pngcrush the image')
+
+    def reduce_colour_depth(source, destination):
+        """
+        Reduces colour depth on source, and stores in destination. Removes
+        source. If the conversion fails, raises exception, and moves source to
+        destination.
+        """
+        try:
+            subprocess.check_call(
+                ['convert', source, '-colors', '2', destination],
+                stderr=subprocess.DEVNULL)
+            os.remove(source)
+            return destination
+        except subprocess.CalledProcessError as e:
+            os.rename(source, destination)
+            raise ImageConvertError('Cannot reduce colour depth with convert')
+
+    if quality > 3 or quality < 1:
+        raise NameError('Unsupported quality. Only values [1, 3] allowed.')
+    if quality == 3:
+        return filename
+
+    tmp_filename = '%s.tmp' % filename
+    _, extension = os.path.splitext(filename)
+    os.rename(filename, tmp_filename)
+    if quality == 2:
+        if extension.upper() == '.PNG':
+            pngcrush(tmp_filename, filename)
+        else:
+            os.rename(tmp_filename, filename)
+        return filename
+    if quality == 1:
+        reduce_colour_depth(tmp_filename, filename)
+        if extension.upper() == '.PNG':
+            os.rename(filename, tmp_filename)
+            pngcrush(tmp_filename, filename)
+            return filename
+        else:
+            return filename
+
+
+def to_image(svg_string, image_format, max_size, quality=3):
+    """
+    Takes an svg string and converts it to GIF or PNG with various parameters.
+    Stores the image on disk and returns the filename.
+
+    :param string svg_string:
+        The string that represents the SVG to convert
+    :param string image_format:
+        The format of the resulting image. One of ``GIF`` or ``PNG``.
+    :param int max_size:
+        The maximum size of the image in pixels. Must be between [1, 1000].
+    :param int quality:
+        The amount of effort put towards reducing the size of the resulting
+        image. 3 is the maximum and 1 is the minimum. Note that 1 and 2 might
+        break compatibility on some devices.
+    """
+
     if max_size > 1000:
         raise NameError("max_size is too big. Max of 1000px.")
 
@@ -58,15 +143,12 @@ def to_image(svg_string, image_format, max_size):
 
         os.remove(tmp_file_name)
         os.remove(STATIC_DIR % png_filename)
+        reduce_quality(STATIC_DIR % filename, quality)
         return filename
-
     else:
         os.remove(tmp_file_name)
+        reduce_quality(STATIC_DIR % png_filename, quality)
         return png_filename
-
-    # TODO: Implement optional file size optimisation.
-    # convert foo1.png -colors 2 foo2.png; (reduce color depth)
-    # pngcrush -bit_depth 1 foo2.png final.png (implement optimal png)
 
 
 def main():

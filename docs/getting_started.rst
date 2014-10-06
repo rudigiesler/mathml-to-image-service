@@ -36,7 +36,7 @@ First make sure svgtex and the Flask server are running.
 
 Then::
 
-    curl -X POST 127.0.0.1:5000 -d mathml='<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msup><mi>x</mi><mn>2</mn></msup><msup><mi>y</mi><mn>2</mn></msup></math>' -d image_format=gif -d max_size=500
+    curl -X POST 127.0.0.1:5000 -d mathml='<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msup><mi>x</mi><mn>2</mn></msup><msup><mi>y</mi><mn>2</mn></msup></math>' -d image_format=gif -d max_size=500 -d quality=3
 
 Service returns::
 
@@ -55,13 +55,14 @@ Which redirects to:
 Required fields
 ^^^^^^^^^^^^^^^
 
-============  =====================
+============  ======================
 Field         Expected value
-============  =====================
+============  ======================
 mathml        Any valid MathML
 image_format  GIF or PNG
 max_size      Any size below 1000px
-============  =====================
+quality       Integer between [1, 3]
+============  ======================
 
 Possible Errors
 ^^^^^^^^^^^^^^^

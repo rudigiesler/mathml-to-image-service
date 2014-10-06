@@ -14,8 +14,8 @@ class FlaskrTestCase(unittest.TestCase):
     def test_root_path_get(self):
         self.assertEqual(
             json.loads(self.app.get('/').data.decode('utf-8')),
-            {'error': "Try a post with fields: 'mathml', 'max_size', and "
-                      "'image_format'"})
+            {'error': "Try a post with fields: 'mathml', 'max_size', "
+                      "'image_format', and 'quality'"})
 
     def test_root_path_post_400_with_missing_field(self):
         response = self.app.post('/')
@@ -27,7 +27,7 @@ class FlaskrTestCase(unittest.TestCase):
     def test_root_path_post_400_bad_mathml(self):
         response = self.app.post(
             '/', data={'mathml': '<math>', 'image_format': 'png',
-                       'max_size': '300'})
+                       'max_size': '300', 'quality': '3'})
         self.assertEqual(
             json.loads(response.data.decode('utf-8')),
             {'error': 'Invalid MathML no element found: line 1, column 6'})
@@ -36,7 +36,7 @@ class FlaskrTestCase(unittest.TestCase):
     def test_root_path_post_400_bad_format(self):
         response = self.app.post(
             '/', data={'mathml': '<math></math>', 'image_format': '',
-                       'max_size': '300'})
+                       'max_size': '300', 'quality': '3'})
         self.assertEqual(
             json.loads(response.data.decode('utf-8')),
             {'error': 'Unsupported output file format - "GIF" and "PNG" '
@@ -46,7 +46,7 @@ class FlaskrTestCase(unittest.TestCase):
     def test_root_path_post_redirect_to_image(self):
         response = self.app.post(
             '/', data={'mathml': '<math></math>', 'image_format': 'png',
-                       'max_size': '300'})
+                       'max_size': '300', 'quality': '3'})
         data = json.loads(response.data.decode('utf-8'))
         self.assertIn('url', data)
         self.assertRegex(data.get('url'), r'[\w\d]+.png')
