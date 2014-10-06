@@ -36,7 +36,7 @@ class FlaskrTestCase(unittest.TestCase):
     def test_root_path_post_400_bad_format(self):
         response = self.app.post(
             '/', data={'mathml': '<math></math>', 'image_format': '',
-                       'max_size': '300'})
+                       'max_size': '300', 'quality': '3'})
         self.assertEqual(
             json.loads(response.data.decode('utf-8')),
             {'error': 'Unsupported output file format - "GIF" and "PNG" '
