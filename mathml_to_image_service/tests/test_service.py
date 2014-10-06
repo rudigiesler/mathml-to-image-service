@@ -33,6 +33,16 @@ class FlaskrTestCase(unittest.TestCase):
             {'error': 'Invalid MathML no element found: line 1, column 6'})
         self.assertEqual(response.status_code, 400)
 
+    def test_root_path_post_400_bad_format(self):
+        response = self.app.post(
+            '/', data={'mathml': '<math></math>', 'image_format': '',
+                       'max_size': '300'})
+        self.assertEqual(
+            json.loads(response.data.decode('utf-8')),
+            {'error': 'Unsupported output file format - "GIF" and "PNG" '
+                      'only.'})
+        self.assertEqual(response.status_code, 400)
+
     def test_root_path_post_redirect_to_image(self):
         response = self.app.post(
             '/', data={'mathml': '<math></math>', 'image_format': 'png',
