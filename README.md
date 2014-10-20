@@ -1,8 +1,14 @@
+[![Build Status](https://travis-ci.org/rudigiesler/mathml-to-image-service.svg?branch=master)](https://travis-ci.org/rudigiesler/mathml-to-image-service)
+[![Documentation Status](https://readthedocs.org/projects/mathml-to-image-service/badge/?version=latest)](https://readthedocs.org/projects/mathml-to-image-service/?badge=latest)
+
 # mathml-to-image-service
+
+## Requirements
+ - ``python == 3.4``
 
 ## Installing prerequisites
 ```shell
-sudo apt-get install librsvg2-bin phantomjs
+sudo apt-get install librsvg2-bin phantomjs pngcrush imagemagick
 ```
 
 ## Installing and running svgtex
