@@ -8,7 +8,7 @@
 
 ## Installing prerequisites
 ```shell
-sudo apt-get install librsvg2-bin phantomjs
+sudo apt-get install librsvg2-bin phantomjs pngcrush imagemagick
 ```
 
 ## Installing and running svgtex
